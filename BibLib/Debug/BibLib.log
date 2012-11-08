@@ -1,0 +1,23 @@
+﻿Der Buildvorgang wurde am 25.10.2012 12:47:28 gestartet.
+     1>Projekt "X:\Medienprog\Aufgabe 1\BibLib\BibLib.vcxproj" auf Knoten "2", rebuild Ziel(e).
+     1>_PrepareForClean:
+         Die Datei "Debug\BibLib.lastbuildstate" wird gelöscht.
+       InitializeBuildStatus:
+         "Debug\BibLib.unsuccessfulbuild" wird erstellt, da "AlwaysCreate" angegeben wurde.
+       ClCompile:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\CL.exe /c /I"X:\Medienprog\Aufgabe 1\BibLib" /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _LIB /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Fo"Debug\\" /Fd"Debug\vc100.pdb" /Gd /TP /analyze- /errorReport:prompt Aufgabe3.cpp Aufgabe1.cpp
+         Aufgabe1.cpp
+         Aufgabe3.cpp
+         Code wird generiert...
+       Lib:
+         c:\Program Files (x86)\Microsoft Visual Studio 10.0\VC\bin\Lib.exe /OUT:"X:\Medienprog\Aufgabe 1\Debug\BibLib.lib" /NOLOGO Debug\Aufgabe3.obj
+         Debug\Aufgabe1.obj
+         BibLib.vcxproj -> X:\Medienprog\Aufgabe 1\Debug\BibLib.lib
+       FinalizeBuildStatus:
+         Die Datei "Debug\BibLib.unsuccessfulbuild" wird gelöscht.
+         Aktualisieren des Timestamps von "Debug\BibLib.lastbuildstate".
+     1>Die Erstellung des Projekts "X:\Medienprog\Aufgabe 1\BibLib\BibLib.vcxproj" ist abgeschlossen, rebuild Ziel(e).
+
+Das Erstellen war erfolgreich.
+
+Verstrichene Zeit 00:00:03.38
