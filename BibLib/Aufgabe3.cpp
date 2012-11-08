@@ -3,8 +3,7 @@
 
 const int cabreite = 10;
 const int calaenge = 10;
-static char ca[cabreite][calaenge];
-static int cac[cabreite][calaenge];
+static char ca[cabreite][calaenge][2];
 
 void zeichne_stein(int x, int y, int laenge, int breite, char zeichen, int farbe)
 {
@@ -13,8 +12,8 @@ void zeichne_stein(int x, int y, int laenge, int breite, char zeichen, int farbe
 		for (int j = x; j < x+breite; j++)
 		{
 			if ((j < cabreite) && (i < calaenge))
-				ca[j][i] = zeichen;
-				cac[j][i] = farbe;
+				ca[j][i][0] = zeichen;
+				ca[j][i][1] = farbe;
 		}
 	}
 
@@ -27,8 +26,8 @@ void ausgeben_feld()
 	{
 		for (int j = 0; j <= cabreite; j++)
 		{
-			setColor(cac[j][i]);
-			printf("%c", ca[j][i]);
+			setColor(ca[j][i][1]);
+			printf("%c", ca[j][i][0]);
 		}
 		printf("\n");
 	}
@@ -40,8 +39,8 @@ void clear_feld()
 	{
 		for (int j = 0; j <= cabreite; j++)
 		{
-			ca[j][i] = ' ';
-			cac[j][i] = -1;
+			ca[j][i][0] = ' ';
+			ca[j][i][1] = -1;
 		}
 	}
 }
