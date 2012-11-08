@@ -6,3 +6,4 @@ void zeichne_stein(int x, int y, int laenge, int breite, char zeichen, int farbe
 void ausgeben_feld();
 void clear_feld();
 void clrscr();
+char pause(int &zeit);
