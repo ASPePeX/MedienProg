@@ -11,3 +11,53 @@ int getKeyboardInput();
 void endGame(bool *running);
 void update(int *bx, int *by, bool *running);
 void render(int *bx, int *by);
+
+class View				//verwaltet die physikalische Ausgabe
+{
+private:
+	char feld[60][60][2];	//****** Character-Feld zur Darstellung
+public:
+	View();
+	void clear();		//initialisiere das Feld mit Leerzeichen
+	void zeichne(int x, int y, char zeichen, int farbe);
+						//zeichne an der Stelle (x,y) das Zeichen
+						//mit der angegebenen Farbe
+	void zeichne();		//gib den Inhalt des Feldes auf der Konsole aus
+};
+
+class Element			//Ein Element eines Steines oder auch Baustein
+{
+private:
+	int x;				//x-Position
+	int y;				//y-Position
+	char zeichen;
+	int farbe;
+public:
+	Element(int x, int y, char zeichen, int farbe);
+	void setX(int x);
+	void setY(int y);
+	void setFarbe(int farbe);
+	void setZeichen(char zeichen);
+	int getX();
+	int getY();
+	int getFarbe();
+	char getZeichen();
+	void zeichne(View *v);	//zeichnet dieses Element auf einem View
+};
+
+class Stein
+{
+private:
+	Element *Liste;		//maximal 4 Elemente pro Stein
+						//gelöschte Elemente werden aus der Liste entfernt
+	char zeichen;		// Zeichen des Steins
+public:
+	Stein(char zeichen);		//Stein wird immer an der gleichen Position erzeugt
+						//Wie der Stein aussieht (Form) wird hier im
+						//Konstruktor eines Steins entschieden
+						//Er besteht zunächst immer aus 4 Elementen
+	~Stein();			//Destruktor für Stein, Löschen der Element-Liste
+	void fallen();		//Stein fällt um eine Einheit nach unten
+	void show(View *);	//Stein wird auf dem View visualisiert
+};
+

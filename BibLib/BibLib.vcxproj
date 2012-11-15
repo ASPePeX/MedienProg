@@ -75,6 +75,7 @@
   <ItemGroup>
     <ClCompile Include="Aufgabe3.cpp" />
     <ClCompile Include="Aufgabe1.cpp" />
+    <ClCompile Include="Aufgabe4.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BibLib.h" />
