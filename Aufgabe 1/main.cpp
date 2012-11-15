@@ -1,27 +1,24 @@
 #include <stdio.h>
 #include <BibLib.h>
+#include <iostream>
+#include <conio.h>
+#include <Windows.h>
 
 
 int bx = 1;
 int by = 1;
 int mzeit = 0;
+const int refreshRate = 200;
+static bool running = true;
+
 
 void main(void)
 {
-	while(char button = pause(mzeit))
+	while(running)
 	{
-		
-	clear_feld();
-	setColor(-1);
-	zeichne_stein(bx,by,2,2,'A',3);
-	ausgeben_feld();
-			
-		if (button == 'a')
-			bx = bx-1;
-		else if (button == 's')
-			bx = bx+1;
-		else if (button == 'x')
-			by = by+1;
+		Sleep(refreshRate);
+		update(&bx,&by, &running);
+		render(&bx,&by);
 	}
 }
 

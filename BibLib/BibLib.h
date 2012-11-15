@@ -7,3 +7,7 @@ void ausgeben_feld();
 void clear_feld();
 void clrscr();
 char pause(int &zeit);
+int getKeyboardInput();
+void endGame(bool *running);
+void update(int *bx, int *by, bool *running);
+void render(int *bx, int *by);

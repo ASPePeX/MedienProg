@@ -2,6 +2,7 @@
 #include <BibLib.h>
 #include <Windows.h>
 #include <conio.h>
+#include <iostream>
 
 
 const int cabreite = 10;
@@ -72,4 +73,62 @@ char pause(int &zeit)
 	}
 	zeit=0;
 	return taste;
+}
+
+int getKeyboardInput()
+{
+	 fflush(stdin);
+	 int returnVal = 0;
+	 if(_kbhit() != 0)
+	 {
+		returnVal=_getch();
+		if(returnVal==0)
+			returnVal=256+_getch();
+	}
+	return returnVal;
+}
+
+void endGame(bool *running)
+{
+	*running = false;
+}
+
+
+void update(int *bx, int *by, bool *running)
+{
+	int keyIn = getKeyboardInput();
+	if(keyIn != 0)
+	{
+		switch(keyIn)
+		{
+		case 27: // [ESC]
+			endGame(running);
+			break;
+		case 224: // Special key
+			int keyIn2= getKeyboardInput();
+			switch(keyIn2)
+			{
+			case 75: // [<-]
+				*bx = *bx-1;
+				break;
+			case 77: // [->]
+				*bx = *bx+1;
+				break;
+			case 80: // [ v ]
+				*by = *by+1;
+				break;
+			}
+			break;
+		}
+	}
+	else
+		*by = *by+1;
+}
+
+void render(int *bx, int *by)
+{
+	clear_feld();
+	setColor(-1);
+	zeichne_stein(*bx,*by,2,2,'A',3);
+	ausgeben_feld();
 }
