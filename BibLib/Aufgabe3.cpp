@@ -4,7 +4,6 @@
 #include <conio.h>
 #include <iostream>
 
-
 const int cabreite = 10;
 const int calaenge = 10;
 const int MAXZEIT = 60;

@@ -4,7 +4,6 @@
 #include <conio.h>
 #include <Windows.h>
 
-
 int bx = 1;
 int by = 1;
 int mzeit = 0;
