@@ -32,23 +32,28 @@ private:
 	int y;				//y-Position
 	char zeichen;
 	int farbe;
+	Element *next;
 public:
-	Element(int x, int y, char zeichen, int farbe);
+	Element(int _x, int _y, char _zeichen, int _farbe);
+	~Element();
+	Element(Element &e);
 	void setX(int x);
 	void setY(int y);
 	void setFarbe(int farbe);
 	void setZeichen(char zeichen);
+	void setNext(Element *n);
 	int getX();
 	int getY();
 	int getFarbe();
 	char getZeichen();
+	Element * getNext();
 	void zeichne(View *v);	//zeichnet dieses Element auf einem View
 };
 
 class Stein
 {
 private:
-	Element *Liste;		//maximal 4 Elemente pro Stein
+	Element *liste;		//maximal 4 Elemente pro Stein
 						//gelöschte Elemente werden aus der Liste entfernt
 	char zeichen;		// Zeichen des Steins
 public:
@@ -57,6 +62,7 @@ public:
 						//Konstruktor eines Steins entschieden
 						//Er besteht zunächst immer aus 4 Elementen
 	~Stein();			//Destruktor für Stein, Löschen der Element-Liste
+	Stein(Stein &s);
 	void fallen();		//Stein fällt um eine Einheit nach unten
 	void show(View *);	//Stein wird auf dem View visualisiert
 };

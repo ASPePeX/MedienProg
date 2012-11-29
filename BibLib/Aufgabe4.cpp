@@ -46,7 +46,10 @@ Element::Element(int _x, int _y, char _zeichen, int _farbe)
 	y = _y;
 	zeichen = _zeichen;
 	farbe = _farbe;
+	next = NULL;
 }
+Element::~Element() {}
+Element::Element(Element &e) {}
 void Element::setX(int _x)
 {
 	x = _x;
@@ -62,6 +65,10 @@ void Element::setFarbe(int _farbe)
 void Element::setZeichen(char _zeichen)
 {
 	zeichen = _zeichen;
+}
+void Element::setNext(Element *_n)
+{
+	next = _n;
 }
 int Element::getX()
 {
@@ -79,13 +86,52 @@ char Element::getZeichen()
 {
 	return zeichen;
 }
+Element * Element::getNext()
+{
+	return next;
+}
 void Element::zeichne(View *v)
 {
 	v->zeichne(x, y, zeichen, farbe);
 }
 
-Stein::Stein(char zeichen) {}
+Stein::Stein(char zeichen) 
+{
+	switch(zeichen)
+	{
+	liste = NULL;
+	case 'I':
+		for (int i = 0; i < 4; i++)
+		{
+			Element *pb = new Element(0,0,'X',1);
+			if (liste == NULL)
+			{
+				pb->setNext(liste);
+			}
+			liste = pb;
+		}
+
+
+		break;
+	case 'L':
+		//I
+		break;
+	case 'K':
+		//inverse L
+		break;
+	case 'Z':
+		//Z
+		break;
+	case 'S':
+		//S
+		break;
+	case 'T':
+		//T
+		break;
+	}
+}
 Stein::~Stein() {}
+Stein::Stein(Stein &s) {}
 void Stein::fallen() {}
 void Stein::show(View *) {}
 
