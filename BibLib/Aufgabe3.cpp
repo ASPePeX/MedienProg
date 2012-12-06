@@ -89,7 +89,7 @@ int getKeyboardInput()
 
 void endGame(bool *running)
 {
-	*running = false;
+	running = false;
 }
 
 

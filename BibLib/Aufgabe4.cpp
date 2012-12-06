@@ -1,9 +1,9 @@
 #include "BibLib.h"
-#include <stdio.h>;
+#include <stdio.h>
 
 
-const int viewbreite = 60;
-const int viewlaenge = 60;
+const int viewbreite = 10;
+const int viewlaenge = 10;
 
 View::View() {}
 void View::clear()
@@ -39,6 +39,8 @@ void View::zeichne()
 
 }
 
+////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 Element::Element(int _x, int _y, char _zeichen, int _farbe)
 {
@@ -95,18 +97,26 @@ void Element::zeichne(View *v)
 	v->zeichne(x, y, zeichen, farbe);
 }
 
+//////////////////////////////////////////////////////////////////////////////
+//////////////////////////////////////////////////////////////////////////////
+
 Stein::Stein(char zeichen) 
 {
+	liste = NULL;
 	switch(zeichen)
 	{
-	liste = NULL;
+	
 	case 'I':
 		for (int i = 0; i < 4; i++)
 		{
-			Element *pb = new Element(0,0,'X',1);
-			if (liste == NULL)
+			Element *pb = new Element(viewbreite/2,i,'X',1);
+			if (liste != NULL)
 			{
 				pb->setNext(liste);
+			}
+			else
+			{
+				pb->setNext(NULL);
 			}
 			liste = pb;
 		}
@@ -130,8 +140,38 @@ Stein::Stein(char zeichen)
 		break;
 	}
 }
-Stein::~Stein() {}
+Stein::~Stein() 
+{
+	Element *pe = liste;
+	Element *pen = liste;
+
+	while (pe != NULL)
+	{
+		pen = pe->getNext();
+		delete  pe;
+		pe = pen->getNext();
+	}
+
+}
 Stein::Stein(Stein &s) {}
-void Stein::fallen() {}
-void Stein::show(View *) {}
+void Stein::fallen()
+{
+	Element *pe = liste;
+	while (pe != NULL)
+	{
+		int y = pe->getY();
+		y++;
+		pe->setY(y);
+		pe = pe->getNext();
+	}
+}
+void Stein::show(View *v)
+{
+	Element *pe = liste;
+	while (pe != NULL)
+	{
+		pe->zeichne(v);
+		pe = pe->getNext();
+	}
+}
 
