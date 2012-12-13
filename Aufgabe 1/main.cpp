@@ -15,17 +15,12 @@ void main(void)
 {
 	View v = View();
 	v.clear();
-	//Element e1 = Element(1,1,'x',3);
-	//Element e2 = Element(5,5,'y',4);
-	//e1.zeichne(&v);
-	//e2.zeichne(&v);
-	Stein s1 = Stein('I');
-
-
+	Stein s1 = Stein('T');
 
 	while(running)
 	{
 		Sleep(refreshRate);
+		v.clear();
 		int keyIn = getKeyboardInput();
 		if(keyIn != 0)
 		{
@@ -34,18 +29,18 @@ void main(void)
 			case 27: // [ESC]
 				endGame(&running);
 				break;
-			case 224: // Special key
+			case 224: // Special key 
 				int keyIn2= getKeyboardInput();
 				switch(keyIn2)
 				{
 				case 75: // [<-]
-					*bx = *bx-1;
+					s1.move(-1,0);
 					break;
 				case 77: // [->]
-					*bx = *bx+1;
+					s1.move(1,0);
 					break;
 				case 80: // [ v ]
-					*by = *by+1;
+					s1.move(0,1);
 					break;
 				}
 				break;
@@ -53,7 +48,7 @@ void main(void)
 		}
 		else
 		{
-			*by = *by+1;
+			s1.move(0,1);
 		}
 		s1.show(&v);
 		v.zeichne();

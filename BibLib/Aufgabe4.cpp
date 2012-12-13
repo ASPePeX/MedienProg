@@ -2,8 +2,8 @@
 #include <stdio.h>
 
 
-const int viewbreite = 10;
-const int viewlaenge = 10;
+const int viewbreite = 20;
+const int viewlaenge = 20;
 
 View::View() {}
 void View::clear()
@@ -60,38 +60,47 @@ void Element::setY(int _y)
 {
 	y = _y;
 }
+
 void Element::setFarbe(int _farbe)
 {
 	farbe = _farbe;
 }
+
 void Element::setZeichen(char _zeichen)
 {
 	zeichen = _zeichen;
 }
+
 void Element::setNext(Element *_n)
 {
 	next = _n;
 }
+
 int Element::getX()
 {
 	return x;
 }
+
 int Element::getY()
 {
 	return y;
 }
+
 int Element::getFarbe()
 {
 	return farbe;
 }
+
 char Element::getZeichen()
 {
 	return zeichen;
 }
+
 Element * Element::getNext()
 {
 	return next;
 }
+
 void Element::zeichne(View *v)
 {
 	v->zeichne(x, y, zeichen, farbe);
@@ -107,6 +116,7 @@ Stein::Stein(char zeichen)
 	{
 	
 	case 'I':
+		{
 		for (int i = 0; i < 4; i++)
 		{
 			Element *pb = new Element(viewbreite/2,i,'X',1);
@@ -120,26 +130,94 @@ Stein::Stein(char zeichen)
 			}
 			liste = pb;
 		}
-
-
+		}
 		break;
 	case 'L':
-		//I
+		{
+		Element *pb1 = new Element(viewbreite/2,0,'X',2);
+		pb1->setNext(NULL);
+		liste = pb1;
+		Element *pb2 = new Element(viewbreite/2,1,'X',2);
+		pb2->setNext(liste);
+		liste = pb2;
+		Element *pb3 = new Element(viewbreite/2,2,'X',2);
+		pb3->setNext(liste);
+		liste = pb3;
+		Element *pb4 = new Element((viewbreite/2)+1,2,'X',2);
+		pb4->setNext(liste);
+		liste = pb4;
+		}
 		break;
 	case 'K':
-		//inverse L
+		{
+		Element *pb1 = new Element(viewbreite/2,0,'X',3);
+		pb1->setNext(NULL);
+		liste = pb1;
+		Element *pb2 = new Element(viewbreite/2,1,'X',3);
+		pb2->setNext(liste);
+		liste = pb2;
+		Element *pb3 = new Element(viewbreite/2,2,'X',3);
+		pb3->setNext(liste);
+		liste = pb3;
+		Element *pb4 = new Element((viewbreite/2)-1,2,'X',3);
+		pb4->setNext(liste);
+		liste = pb4;
+		}
 		break;
 	case 'Z':
-		//Z
+		{
+		Element *pb1 = new Element(viewbreite/2,0,'X',2);
+		pb1->setNext(NULL);
+		liste = pb1;
+		Element *pb2 = new Element(viewbreite/2,1,'X',2);
+		pb2->setNext(liste);
+		liste = pb2;
+		Element *pb3 = new Element(viewbreite/2-1,1,'X',2);
+		pb3->setNext(liste);
+		liste = pb3;
+		Element *pb4 = new Element((viewbreite/2)-1,2,'X',2);
+		pb4->setNext(liste);
+		liste = pb4;
+		}
+
 		break;
 	case 'S':
-		//S
+		{
+		Element *pb1 = new Element(viewbreite/2,0,'X',2);
+		pb1->setNext(NULL);
+		liste = pb1;
+		Element *pb2 = new Element(viewbreite/2,1,'X',2);
+		pb2->setNext(liste);
+		liste = pb2;
+		Element *pb3 = new Element(viewbreite/2+1,1,'X',2);
+		pb3->setNext(liste);
+		liste = pb3;
+		Element *pb4 = new Element((viewbreite/2)+1,2,'X',2);
+		pb4->setNext(liste);
+		liste = pb4;
+		}
+
 		break;
 	case 'T':
-		//T
+		{
+		Element *pb1 = new Element(viewbreite/2,0,'X',2);
+		pb1->setNext(NULL);
+		liste = pb1;
+		Element *pb2 = new Element(viewbreite/2,1,'X',2);
+		pb2->setNext(liste);
+		liste = pb2;
+		Element *pb3 = new Element(viewbreite/2+1,1,'X',2);
+		pb3->setNext(liste);
+		liste = pb3;
+		Element *pb4 = new Element((viewbreite/2),2,'X',2);
+		pb4->setNext(liste);
+		liste = pb4;
+		}
+
 		break;
 	}
 }
+
 Stein::~Stein() 
 {
 	Element *pe = liste;
@@ -151,20 +229,28 @@ Stein::~Stein()
 		delete  pe;
 		pe = pen->getNext();
 	}
-
 }
-Stein::Stein(Stein &s) {}
-void Stein::fallen()
+
+Stein::Stein(Stein &s)
+{
+	//copy constructor
+}
+
+void Stein::move(int xadd, int yadd)
 {
 	Element *pe = liste;
 	while (pe != NULL)
 	{
+		int x = pe->getX();
 		int y = pe->getY();
-		y++;
+		x = x + xadd;
+		y = y + yadd;
+		pe->setX(x);
 		pe->setY(y);
 		pe = pe->getNext();
 	}
 }
+
 void Stein::show(View *v)
 {
 	Element *pe = liste;

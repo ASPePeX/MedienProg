@@ -63,7 +63,7 @@ public:
 						//Er besteht zunächst immer aus 4 Elementen
 	~Stein();			//Destruktor für Stein, Löschen der Element-Liste
 	Stein(Stein &s);
-	void fallen();		//Stein fällt um eine Einheit nach unten
+	void move(int xadd, int yadd);
 	void show(View *);	//Stein wird auf dem View visualisiert
 };
 
