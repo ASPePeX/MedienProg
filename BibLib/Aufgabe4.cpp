@@ -2,8 +2,6 @@
 #include <stdio.h>
 
 
-const int viewbreite = 20;
-const int viewlaenge = 20;
 
 View::View() {}
 void View::clear()
@@ -33,8 +31,51 @@ void View::zeichne()
 		{
 			setColor(feld[j][i][1]);
 			printf("%c", feld[j][i][0]);
+			setColor(sfeld[j][i][1]);
+			printf("%c", sfeld[j][i][0]);
 		}
 		printf("\n");
+	}
+
+}
+
+int View::chkcoll()
+{
+	return 1;
+}
+
+void View::freeze(int x, int y, char zeichen, int farbe)
+{
+	sfeld[x][y][0] = zeichen;
+	sfeld[x][y][1] = farbe;
+}
+
+void View::linecheck()
+{
+	for (int i = 0; i <= viewlaenge; i++)
+	{
+		for (int j = 0; j <= viewbreite; j++)
+		{
+			if (sfeld[j][i][0] == ' ')
+				break;
+			else if (j == viewbreite)
+				dropline(i);
+		}
+	}
+}
+
+void View::dropline(int y)
+{
+	for (int i = viewlaenge; i >= 1; i--)
+	{
+		for (int j = viewbreite; j >= 1; j--)
+		{
+			if (j <= y)
+			{
+				sfeld[j][i][0] = sfeld[j][i-1][0];
+				sfeld[j][i][1] = sfeld[j][i-1][1];
+			}
+		}
 	}
 
 }
@@ -50,12 +91,12 @@ Element::Element(int _x, int _y, char _zeichen, int _farbe)
 	farbe = _farbe;
 	next = NULL;
 }
-Element::~Element() {}
-Element::Element(Element &e) {}
+
 void Element::setX(int _x)
 {
 	x = _x;
 }
+
 void Element::setY(int _y)
 {
 	y = _y;
@@ -214,7 +255,7 @@ Stein::Stein(char zeichen)
 		liste = pb4;
 		}
 
-		break;
+	break;
 	}
 }
 

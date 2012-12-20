@@ -12,10 +12,14 @@ void endGame(bool *running);
 void update(int *bx, int *by, bool *running);
 void render(int *bx, int *by);
 
+	const int viewbreite = 20;
+	const int viewlaenge = 20;
+
 class View				//verwaltet die physikalische Ausgabe
 {
 private:
-	char feld[60][60][2];	//****** Character-Feld zur Darstellung
+	char feld[viewbreite][viewlaenge][2];	//****** Character-Feld zur Darstellung
+	char sfeld[viewbreite][viewlaenge][2];
 public:
 	View();
 	void clear();		//initialisiere das Feld mit Leerzeichen
@@ -23,6 +27,10 @@ public:
 						//zeichne an der Stelle (x,y) das Zeichen
 						//mit der angegebenen Farbe
 	void zeichne();		//gib den Inhalt des Feldes auf der Konsole aus
+	int chkcoll();
+	void freeze(int x, int y, char zeichen, int farbe);
+	void linecheck();
+	void dropline(int y);
 };
 
 class Element			//Ein Element eines Steines oder auch Baustein
