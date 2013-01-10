@@ -2,16 +2,26 @@
 #include <stdio.h>
 
 
-
 View::View() {}
 void View::clear()
 {
-	for (int i = 0; i <= viewlaenge; i++)
+	for (int i = 0; i < viewlaenge; i++)
 	{
-		for (int j = 0; j <= viewbreite; j++)
+		for (int j = 0; j < viewbreite; j++)
 		{
 			feld[j][i][0] = ' ';
 			feld[j][i][1] = -1;
+		}
+	}
+}
+void View::clearfreeze()
+{
+	for (int i = 0; i < viewlaenge; i++)
+	{
+		for (int j = 0; j < viewbreite; j++)
+		{
+			sfeld[j][i][0] = 0;
+			sfeld[j][i][1] = -1;
 		}
 	}
 }
@@ -25,23 +35,34 @@ void View::zeichne(int x, int y, char zeichen, int farbe)
 void View::zeichne()
 {
 	clrscr();
-	for (int i = 0; i <= viewlaenge; i++)
+	for (int i = 0; i < viewlaenge; i++)
 	{
-		for (int j = 0; j <= viewbreite; j++)
+		printf("#");
+		for (int j = 0; j < viewbreite; j++)
 		{
-			setColor(feld[j][i][1]);
-			printf("%c", feld[j][i][0]);
+			if (sfeld[j][i][0] != 0)
+			{
 			setColor(sfeld[j][i][1]);
 			printf("%c", sfeld[j][i][0]);
+			}
+			else
+			{
+			setColor(feld[j][i][1]);
+			printf("%c", feld[j][i][0]);
+			}
 		}
-		printf("\n");
+		printf("#\n");
 	}
 
 }
 
-int View::chkcoll()
+int View::checkcol(int x, int y, View *v)
 {
-	return 1;
+	v->zeichne(x,y+2,'+',6);
+	if (sfeld[x][y+2][0] != 0)
+		return 1;
+	else
+		return 0;
 }
 
 void View::freeze(int x, int y, char zeichen, int farbe)
@@ -52,11 +73,11 @@ void View::freeze(int x, int y, char zeichen, int farbe)
 
 void View::linecheck()
 {
-	for (int i = 0; i <= viewlaenge; i++)
+	for (int i = 0; i < viewlaenge; i++)
 	{
-		for (int j = 0; j <= viewbreite; j++)
+		for (int j = 0; j < viewbreite; j++)
 		{
-			if (sfeld[j][i][0] == ' ')
+			if (sfeld[j][i][0] == 0)
 				break;
 			else if (j == viewbreite)
 				dropline(i);
@@ -91,6 +112,8 @@ Element::Element(int _x, int _y, char _zeichen, int _farbe)
 	farbe = _farbe;
 	next = NULL;
 }
+Element::~Element() {}
+Element::Element(Element &e) {}
 
 void Element::setX(int _x)
 {
@@ -146,6 +169,11 @@ void Element::zeichne(View *v)
 {
 	v->zeichne(x, y, zeichen, farbe);
 }
+void Element::freeze(View *v)
+{
+	v->freeze(x, y, zeichen, farbe);
+}
+
 
 //////////////////////////////////////////////////////////////////////////////
 //////////////////////////////////////////////////////////////////////////////
@@ -302,3 +330,33 @@ void Stein::show(View *v)
 	}
 }
 
+void Stein::freeze(View *v)
+{
+	Element *pe = liste;
+	while (pe != NULL)
+	{
+		pe->freeze(v);
+		pe = pe->getNext();
+	}
+
+}
+
+int Stein::checkcol(View *v)
+{
+	Element *pe = liste;
+	while (pe != NULL)
+	{
+		int x = pe->getX();
+		int y = pe->getY();
+
+		if (y == viewlaenge-1)
+			return 1;
+		else if (v->checkcol(x,y,v))
+			return 1;
+		else
+			return 0;
+
+		pe = pe->getNext();
+	}
+	return 0;
+}

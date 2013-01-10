@@ -12,8 +12,8 @@ void endGame(bool *running);
 void update(int *bx, int *by, bool *running);
 void render(int *bx, int *by);
 
-	const int viewbreite = 20;
-	const int viewlaenge = 20;
+const int viewbreite = 20;
+const int viewlaenge = 20;
 
 class View				//verwaltet die physikalische Ausgabe
 {
@@ -23,11 +23,12 @@ private:
 public:
 	View();
 	void clear();		//initialisiere das Feld mit Leerzeichen
+	void clearfreeze();
 	void zeichne(int x, int y, char zeichen, int farbe);
 						//zeichne an der Stelle (x,y) das Zeichen
 						//mit der angegebenen Farbe
 	void zeichne();		//gib den Inhalt des Feldes auf der Konsole aus
-	int chkcoll();
+	int checkcol(int x, int y, View *v);
 	void freeze(int x, int y, char zeichen, int farbe);
 	void linecheck();
 	void dropline(int y);
@@ -56,6 +57,7 @@ public:
 	char getZeichen();
 	Element * getNext();
 	void zeichne(View *v);	//zeichnet dieses Element auf einem View
+	void freeze(View *v);
 };
 
 class Stein
@@ -73,5 +75,8 @@ public:
 	Stein(Stein &s);
 	void move(int xadd, int yadd);
 	void show(View *);	//Stein wird auf dem View visualisiert
+	void freeze(View *v);
+	int Stein::checkcol(View *v);
+
 };
 

@@ -11,12 +11,12 @@ const int refreshRate = 200;
 static bool running = true;
 
 
-
 void main(void)
 {
 	View v = View();
 	v.clear();
-	Stein s1 = Stein('T');
+	v.clearfreeze();
+	Stein *s1 = new Stein('T');
 
 	while(running)
 	{
@@ -35,13 +35,13 @@ void main(void)
 				switch(keyIn2)
 				{
 				case 75: // [<-]
-					s1.move(-1,0);
+					s1->move(-1,0);
 					break;
 				case 77: // [->]
-					s1.move(1,0);
+					s1->move(1,0);
 					break;
 				case 80: // [ v ]
-					s1.move(0,1);
+					s1->move(0,1);
 					break;
 				}
 				break;
@@ -49,9 +49,15 @@ void main(void)
 		}
 		else
 		{
-			s1.move(0,1);
+			s1->move(0,1);
 		}
-		s1.show(&v);
+		s1->show(&v);
+		if (s1->checkcol(&v) == 1)
+		{
+			s1->freeze(&v);
+			delete s1;
+			s1 = new  Stein('L');
+		}
 		v.zeichne();
 	}
 }
