@@ -16,7 +16,7 @@ void main(void)
 	View v = View();
 	v.clear();
 	v.clearfreeze();
-	Stein *s1 = new Stein('T');
+	Stein *s1 = new Stein('I');
 
 	while(running)
 	{
@@ -41,7 +41,7 @@ void main(void)
 					s1->move(1,0);
 					break;
 				case 80: // [ v ]
-					s1->move(0,1);
+					s1->rotate();
 					break;
 				}
 				break;
@@ -59,6 +59,7 @@ void main(void)
 			s1 = new  Stein('L');
 		}
 		v.zeichne();
+		v.linecheck();
 	}
 }
 

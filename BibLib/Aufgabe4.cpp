@@ -58,8 +58,8 @@ void View::zeichne()
 
 int View::checkcol(int x, int y, View *v)
 {
-	v->zeichne(x,y+2,'+',6);
-	if (sfeld[x][y+2][0] != 0)
+	//v->zeichne(x,y+1,'+',6);
+	if (sfeld[x][y+1][0] != 0)
 		return 1;
 	else
 		return 0;
@@ -77,9 +77,11 @@ void View::linecheck()
 	{
 		for (int j = 0; j < viewbreite; j++)
 		{
+			if (sfeld[j][i][0] != 0)
+				sfeld[j][i][1] = 8;
 			if (sfeld[j][i][0] == 0)
 				break;
-			else if (j == viewbreite)
+			else if (j >= viewlaenge-1)
 				dropline(i);
 		}
 	}
@@ -91,11 +93,7 @@ void View::dropline(int y)
 	{
 		for (int j = viewbreite; j >= 1; j--)
 		{
-			if (j <= y)
-			{
-				sfeld[j][i][0] = sfeld[j][i-1][0];
-				sfeld[j][i][1] = sfeld[j][i-1][1];
-			}
+		//sfeld umsortieren
 		}
 	}
 
@@ -165,13 +163,13 @@ Element * Element::getNext()
 	return next;
 }
 
-void Element::zeichne(View *v)
+void Element::zeichne(View *v, int xadd, int yadd)
 {
-	v->zeichne(x, y, zeichen, farbe);
+	v->zeichne(x+xadd, y+yadd, zeichen, farbe);
 }
-void Element::freeze(View *v)
+void Element::freeze(View *v, int xadd, int yadd)
 {
-	v->freeze(x, y, zeichen, farbe);
+	v->freeze(x+xadd, y+yadd, zeichen, farbe);
 }
 
 
@@ -180,15 +178,17 @@ void Element::freeze(View *v)
 
 Stein::Stein(char zeichen) 
 {
+	x = 5;
+	y = 2;
 	liste = NULL;
 	switch(zeichen)
 	{
 	
 	case 'I':
 		{
-		for (int i = 0; i < 4; i++)
+		for (int i = -1; i < 3; i++)
 		{
-			Element *pb = new Element(viewbreite/2,i,'X',1);
+			Element *pb = new Element(0,i,'X',2);
 			if (liste != NULL)
 			{
 				pb->setNext(liste);
@@ -203,48 +203,48 @@ Stein::Stein(char zeichen)
 		break;
 	case 'L':
 		{
-		Element *pb1 = new Element(viewbreite/2,0,'X',2);
+		Element *pb1 = new Element(0,-1,'X',2);
 		pb1->setNext(NULL);
 		liste = pb1;
-		Element *pb2 = new Element(viewbreite/2,1,'X',2);
+		Element *pb2 = new Element(0,0,'X',2);
 		pb2->setNext(liste);
 		liste = pb2;
-		Element *pb3 = new Element(viewbreite/2,2,'X',2);
+		Element *pb3 = new Element(0,1,'X',2);
 		pb3->setNext(liste);
 		liste = pb3;
-		Element *pb4 = new Element((viewbreite/2)+1,2,'X',2);
+		Element *pb4 = new Element(1,1,'X',2);
 		pb4->setNext(liste);
 		liste = pb4;
 		}
 		break;
 	case 'K':
 		{
-		Element *pb1 = new Element(viewbreite/2,0,'X',3);
+		Element *pb1 = new Element(0,-1,'X',3);
 		pb1->setNext(NULL);
 		liste = pb1;
-		Element *pb2 = new Element(viewbreite/2,1,'X',3);
+		Element *pb2 = new Element(0,0,'X',3);
 		pb2->setNext(liste);
 		liste = pb2;
-		Element *pb3 = new Element(viewbreite/2,2,'X',3);
+		Element *pb3 = new Element(0,1,'X',3);
 		pb3->setNext(liste);
 		liste = pb3;
-		Element *pb4 = new Element((viewbreite/2)-1,2,'X',3);
+		Element *pb4 = new Element(-1,1,'X',3);
 		pb4->setNext(liste);
 		liste = pb4;
 		}
 		break;
 	case 'Z':
 		{
-		Element *pb1 = new Element(viewbreite/2,0,'X',2);
+		Element *pb1 = new Element(0,-1,'X',2);
 		pb1->setNext(NULL);
 		liste = pb1;
-		Element *pb2 = new Element(viewbreite/2,1,'X',2);
+		Element *pb2 = new Element(0,0,'X',2);
 		pb2->setNext(liste);
 		liste = pb2;
-		Element *pb3 = new Element(viewbreite/2-1,1,'X',2);
+		Element *pb3 = new Element(-1,0,'X',2);
 		pb3->setNext(liste);
 		liste = pb3;
-		Element *pb4 = new Element((viewbreite/2)-1,2,'X',2);
+		Element *pb4 = new Element(-1,1,'X',2);
 		pb4->setNext(liste);
 		liste = pb4;
 		}
@@ -252,16 +252,16 @@ Stein::Stein(char zeichen)
 		break;
 	case 'S':
 		{
-		Element *pb1 = new Element(viewbreite/2,0,'X',2);
+		Element *pb1 = new Element(0,-1,'X',2);
 		pb1->setNext(NULL);
 		liste = pb1;
-		Element *pb2 = new Element(viewbreite/2,1,'X',2);
+		Element *pb2 = new Element(0,0,'X',2);
 		pb2->setNext(liste);
 		liste = pb2;
-		Element *pb3 = new Element(viewbreite/2+1,1,'X',2);
+		Element *pb3 = new Element(1,0,'X',2);
 		pb3->setNext(liste);
 		liste = pb3;
-		Element *pb4 = new Element((viewbreite/2)+1,2,'X',2);
+		Element *pb4 = new Element(1,1,'X',2);
 		pb4->setNext(liste);
 		liste = pb4;
 		}
@@ -269,16 +269,16 @@ Stein::Stein(char zeichen)
 		break;
 	case 'T':
 		{
-		Element *pb1 = new Element(viewbreite/2,0,'X',2);
+		Element *pb1 = new Element(0,-1,'X',2);
 		pb1->setNext(NULL);
 		liste = pb1;
-		Element *pb2 = new Element(viewbreite/2,1,'X',2);
+		Element *pb2 = new Element(0,0,'X',2);
 		pb2->setNext(liste);
 		liste = pb2;
-		Element *pb3 = new Element(viewbreite/2+1,1,'X',2);
+		Element *pb3 = new Element(1,0,'X',2);
 		pb3->setNext(liste);
 		liste = pb3;
-		Element *pb4 = new Element((viewbreite/2),2,'X',2);
+		Element *pb4 = new Element(0,1,'X',2);
 		pb4->setNext(liste);
 		liste = pb4;
 		}
@@ -307,17 +307,26 @@ Stein::Stein(Stein &s)
 
 void Stein::move(int xadd, int yadd)
 {
+	int x = this->getX();
+	int y = this->getY();
+	x = x + xadd;
+	y = y + yadd;
+	this->setX(x);
+	this->setY(y);
+}
+
+void Stein::rotate()
+{
 	Element *pe = liste;
 	while (pe != NULL)
 	{
 		int x = pe->getX();
 		int y = pe->getY();
-		x = x + xadd;
-		y = y + yadd;
-		pe->setX(x);
-		pe->setY(y);
+		pe->setX(y*-1);
+		pe->setY(x);
 		pe = pe->getNext();
 	}
+
 }
 
 void Stein::show(View *v)
@@ -325,7 +334,7 @@ void Stein::show(View *v)
 	Element *pe = liste;
 	while (pe != NULL)
 	{
-		pe->zeichne(v);
+		pe->zeichne(v,this->getX(),this->getY());
 		pe = pe->getNext();
 	}
 }
@@ -335,7 +344,7 @@ void Stein::freeze(View *v)
 	Element *pe = liste;
 	while (pe != NULL)
 	{
-		pe->freeze(v);
+		pe->freeze(v,this->getX(),this->getY());
 		pe = pe->getNext();
 	}
 
@@ -346,17 +355,35 @@ int Stein::checkcol(View *v)
 	Element *pe = liste;
 	while (pe != NULL)
 	{
-		int x = pe->getX();
-		int y = pe->getY();
+		int x = pe->getX() + this->getX();
+		int y = pe->getY() + this->getY();
 
 		if (y == viewlaenge-1)
 			return 1;
 		else if (v->checkcol(x,y,v))
 			return 1;
-		else
-			return 0;
 
 		pe = pe->getNext();
 	}
 	return 0;
+}
+
+void Stein::setX(int _x)
+{
+	x = _x;
+}
+
+void Stein::setY(int _y)
+{
+	y = _y;
+}
+
+int Stein::getX()
+{
+	return x;
+}
+
+int Stein::getY()
+{
+	return y;
 }

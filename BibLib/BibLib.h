@@ -56,13 +56,15 @@ public:
 	int getFarbe();
 	char getZeichen();
 	Element * getNext();
-	void zeichne(View *v);	//zeichnet dieses Element auf einem View
-	void freeze(View *v);
+	void zeichne(View *v, int xadd, int yadd);	//zeichnet dieses Element auf einem View
+	void freeze(View *v, int xadd, int yadd);
 };
 
 class Stein
 {
 private:
+	int x, y;
+
 	Element *liste;		//maximal 4 Elemente pro Stein
 						//gelöschte Elemente werden aus der Liste entfernt
 	char zeichen;		// Zeichen des Steins
@@ -74,8 +76,13 @@ public:
 	~Stein();			//Destruktor für Stein, Löschen der Element-Liste
 	Stein(Stein &s);
 	void move(int xadd, int yadd);
+	void rotate();
 	void show(View *);	//Stein wird auf dem View visualisiert
 	void freeze(View *v);
+	void setX(int x);
+	void setY(int y);
+	int getX();
+	int getY();
 	int Stein::checkcol(View *v);
 
 };
